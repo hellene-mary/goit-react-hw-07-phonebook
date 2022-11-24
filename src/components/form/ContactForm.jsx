@@ -1,17 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../redux/contactsSlice';
+import { addContact } from '../redux/operations';
 import css from './ContactForm.module.css';
 import { toast } from 'react-toastify';
+import { selectContacts } from './../redux/selectors';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(selectContacts);
 
   function handlerSubmit(evt) {
     evt.preventDefault();
     const form = evt.target;
     const name = form.name.value;
-    const contact = form.number.value;
+    const phone = form.number.value;
 
     if (
       contacts.find(
@@ -21,7 +22,7 @@ const ContactForm = () => {
       return toast.warn(`${name} is alredy in contacts.`);
     }
 
-    dispatch(addContact(name, contact));
+    dispatch(addContact({ name, phone }));
 
     toast.success(`${name} is added to the contact list!`);
 
