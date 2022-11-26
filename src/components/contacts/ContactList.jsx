@@ -1,18 +1,29 @@
 import { useSelector, useDispatch } from 'react-redux';
-import css from './ContactList.module.css';
 import { deleteContact } from 'components/redux/operations';
 import { toast } from 'react-toastify';
 import { selectContacts, selectContactsFilter } from './../redux/selectors';
+import { IoPersonOutline, IoClose } from 'react-icons/io5';
+import {
+  ContactsList,
+  ContactItem,
+  ContactIcon,
+  ContactText,
+  ContactDelete,
+} from './ContactList.styles';
+import { getRandomHexColor } from '../utils/getColorsFn';
 
 // компонент використовую список контактів з стору через useSelector
 export function ContactList() {
   const contacts = useSelector(selectContacts);
+
   const filterValue = useSelector(selectContactsFilter).toLowerCase();
 
   // надсилання екшона видалення контакту за допомогою useDispatch
   const dispatch = useDispatch();
+
   const handleDelete = evt => {
-    dispatch(deleteContact(evt.target.id));
+    dispatch(deleteContact(evt.currentTarget.id));
+
     // ^ сповіщення має відображатись у featch??
     toast.info(`This contact is delited from your phonebook!`);
   };
@@ -30,15 +41,21 @@ export function ContactList() {
   const visibilityContacts = getVisibilityContacts();
 
   return (
-    <ul className={css.contactsList}>
+    <ContactsList>
       {visibilityContacts.map(contact => (
-        <li key={contact.id} className={css.contact}>
-          {contact.name}: {contact.phone}
-          <button type="button" id={contact.id} onClick={handleDelete}>
-            Delete
-          </button>
-        </li>
+        <ContactItem key={contact.id} rgb={getRandomHexColor()}>
+          <ContactIcon>
+            <IoPersonOutline />
+          </ContactIcon>
+          <ContactText rgb={getRandomHexColor()}>
+            {contact.name}: <span>{contact.phone}</span>
+          </ContactText>
+          <ContactDelete type="button" id={contact.id} onClick={handleDelete}>
+            <IoClose />
+            {/* Delete */}
+          </ContactDelete>
+        </ContactItem>
       ))}
-    </ul>
+    </ContactsList>
   );
 }

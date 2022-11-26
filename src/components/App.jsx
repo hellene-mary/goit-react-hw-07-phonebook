@@ -6,9 +6,11 @@ import { useEffect } from 'react';
 import { ContactList } from './contacts/ContactList';
 import ContactForm from './form/ContactForm';
 import { Filter } from './filter/Filter';
-import css from './App.module.css';
+import { Container } from './App.styles';
 import { selectIsLoading, selectError } from './redux/selectors';
 import { fetchContacts } from './redux/operations';
+// import { getRandomHexColor } from '../components/utils/getColorsFn';
+import { Dna } from 'react-loader-spinner';
 
 document.title = 'PhonebookBox_redux';
 
@@ -22,14 +24,24 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <div className={css.phonebookBox}>
+    <Container>
       <h1>Phonebook</h1>
       <ContactForm />
       <h2>Contacts</h2>
       <Filter />
-      {isLoading && !error && <b>Request in progress...</b>}
+      {isLoading && !error && (
+        <Dna
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="dna-loading"
+          wrapperStyle={{}}
+          wrapperClass="dna-wrapper"
+        />
+      )}
       <ContactList />
       <ToastContainer
+        font-size="15px"
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -41,7 +53,7 @@ const App = () => {
         pauseOnHover
         theme="light"
       />
-    </div>
+    </Container>
   );
 };
 

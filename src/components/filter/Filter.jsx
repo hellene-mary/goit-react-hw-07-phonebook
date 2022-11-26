@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import css from './Filter.module.css';
+import { FilterLabel } from './Filter.styles';
 import { setFilterContacts } from '../redux/filtersSlice';
 
 export function Filter() {
@@ -10,9 +10,9 @@ export function Filter() {
   };
 
   return (
-    <label className={css.filterLabel}>
+    <FilterLabel>
       Find contact by the name
       <input type="text" name="filter" onChange={handlerFilter} />
-    </label>
+    </FilterLabel>
   );
 }

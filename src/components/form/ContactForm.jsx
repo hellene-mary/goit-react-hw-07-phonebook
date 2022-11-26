@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../redux/operations';
-import css from './ContactForm.module.css';
+// import css from './ContactForm.module.css';
 import { toast } from 'react-toastify';
 import { selectContacts } from './../redux/selectors';
+import { IoPersonAdd } from 'react-icons/io5';
+import { Form, FormList, FormListItem, FormButton } from './ContactForm.styles';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
@@ -30,9 +32,9 @@ const ContactForm = () => {
   }
 
   return (
-    <form onSubmit={handlerSubmit} className={css.form}>
-      <ul className={css.formList}>
-        <li className={css.formListItem}>
+    <Form onSubmit={handlerSubmit}>
+      <FormList>
+        <FormListItem>
           <p>Name</p>
           <input
             type="text"
@@ -41,8 +43,8 @@ const ContactForm = () => {
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
           />
-        </li>
-        <li>
+        </FormListItem>
+        <FormListItem>
           <p>Contact</p>
           <input
             type="tel"
@@ -51,11 +53,14 @@ const ContactForm = () => {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
           />
-        </li>
-      </ul>
+        </FormListItem>
+      </FormList>
 
-      <button type="submit">Add contact</button>
-    </form>
+      <FormButton type="submit">
+        <IoPersonAdd />
+        Add contact
+      </FormButton>
+    </Form>
   );
 };
 
